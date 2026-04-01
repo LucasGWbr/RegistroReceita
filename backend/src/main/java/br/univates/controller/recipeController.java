@@ -1,11 +1,11 @@
 package br.univates.controller;
 
+import br.univates.dtos.recipeDTO;
 import br.univates.model.recipes;
 import br.univates.service.recipeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,8 +17,33 @@ public class recipeController {
         this.recipeService = recipeService;
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<recipes> createRecipe(@RequestBody recipeDTO recipeDTO) {
+        recipes created = recipeService.createRecipe(recipeDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
     @GetMapping("/read/all")
     public ResponseEntity<List<recipes>> getAllRecipes(){
         return ResponseEntity.ok(recipeService.getAllRecipes());
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<recipes> updateRecipe(@PathVariable Long id, @RequestBody recipeDTO recipeDTO) {
+        try {
+            return ResponseEntity.ok(recipeService.updateRecipe(id, recipeDTO));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id) {
+        try {
+            recipeService.deleteRecipe(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

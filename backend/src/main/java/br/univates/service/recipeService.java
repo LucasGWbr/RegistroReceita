@@ -25,4 +25,18 @@ public class recipeService {
     public List<recipes> getAllRecipes(){
         return recipeRepository.findAll();
     }
+
+    public recipes updateRecipe(Long id, recipeDTO recipeDTO) {
+        recipes recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Receita não encontrada"));
+        BeanUtils.copyProperties(recipeDTO, recipe);
+        return recipeRepository.save(recipe);
+    }
+
+    public void deleteRecipe(Long id) {
+        if (!recipeRepository.existsById(id)) {
+            throw new RuntimeException("Receita não encontrada");
+        }
+        recipeRepository.deleteById(id);
+    }
 }
