@@ -1,0 +1,65 @@
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: receitas
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  # ── Spring Boot API ─────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend          # pasta com o Dockerfile do Spring Boot
+      dockerfile: Dockerfile
+    container_name: spring_api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/receitas
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  # ── React + Vite (Nginx) ────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend         # pasta com o Dockerfile do React
+      dockerfile: Dockerfile
+    container_name: react_app
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "4173:4173"
+    networks:
+      - app-network
+
+# ── Volumes & Networks ────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
