@@ -17,7 +17,9 @@ public class recipes {
     private String name;
     private String description;
     private BigDecimal price;
-    private String recipe_type;
+    
+    @Column(name = "recipe_type")
+    private String recipeType;
 
     private LocalDateTime CreatedAt;
     @PrePersist
