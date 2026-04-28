@@ -19,7 +19,7 @@ const typeEmoji = {
     'Entrada':         '🥗',
 }
 
-const EMPTY_FORM = { name: '', description: '', price: '', recipe_type: '' }
+const EMPTY_FORM = { name: '', description: '', price: '', recipeType: '' }
 
 export default function Recipes({ user, onLogout }) {
     const [recipes, setRecipes]   = useState([])
@@ -97,7 +97,7 @@ export default function Recipes({ user, onLogout }) {
             name: recipe.name,
             description: recipe.description,
             price: recipe.price,
-            recipe_type: recipe.recipe_type
+            recipeType: recipe.recipeType
         })
         setFormError('')
         setShowForm(true)
@@ -231,15 +231,15 @@ export default function Recipes({ user, onLogout }) {
 
                         <div className={styles.grid}>
                             {recipes.map((recipe, i) => {
-                                const colors = typeColors[recipe.recipe_type] ?? { bg: '#f3f4f6', text: '#374151' }
-                                const emoji  = typeEmoji[recipe.recipe_type] ?? '🍴'
+                                const colors = typeColors[recipe.recipeType] ?? { bg: '#f3f4f6', text: '#374151' }
+                                const emoji  = typeEmoji[recipe.recipeType] ?? '🍴'
 
                                 return (
                                     <div key={recipe.id ?? i} className={styles.card}>
                                         <div className={styles.cardHeader}>
                                             <span className={styles.emoji}>{emoji}</span>
                                             <span className={styles.badge} style={{ background: colors.bg, color: colors.text }}>
-                                                {recipe.recipe_type ?? 'Sem tipo'}
+                                                {recipe.recipeType ?? 'Sem tipo'}
                                             </span>
                                         </div>
 
@@ -297,7 +297,7 @@ export default function Recipes({ user, onLogout }) {
                             </label>
 
                             <label>Tipo
-                                <input name="recipe_type" value={form.recipe_type} onChange={handleChange} required />
+                                <input name="recipeType" value={form.recipeType} onChange={handleChange} required />
                             </label>
 
                             {formError && <p className={styles.formError}>{formError}</p>}

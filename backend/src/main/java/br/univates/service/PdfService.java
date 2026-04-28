@@ -43,7 +43,7 @@ public class PdfService {
                 table.addCell(r.getName());
                 table.addCell(r.getDescription());
                 table.addCell(r.getPrice().toString());
-                table.addCell(r.getRecipe_type());
+                table.addCell(r.getRecipeType());
             }
 
             document.add(table);
