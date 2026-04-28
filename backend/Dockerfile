@@ -9,7 +9,7 @@ RUN mvn dependency:go-offline -B
 
 # Copia o restante do código e compila
 COPY src ./src
-RUN mvn package -DskipTests -B
+RUN mvn package -B
 
 # ─── Stage 2: Runtime ─────────────────────────────────────────────────────────
 FROM eclipse-temurin:21-jre-alpine
