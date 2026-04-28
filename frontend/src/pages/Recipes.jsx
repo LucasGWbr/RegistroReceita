@@ -90,11 +90,12 @@ export default function Recipes({ user, onLogout }) {
     const handleDownloadPdf = async () => {
         setGeneratingPdf(true)
         try {
-            const params = new URLSearchParams()
-            if (filterDate) params.append('date', filterDate)
-            if (filterType) params.append('type', filterType)
+            let url = '/api/recipe/read/pdf';
+            const params = new URLSearchParams();
+            if (filterType) params.append('type', filterType);
+            if (filterDate) params.append('dateTime', filterDate+'T00:00:00');
+            url += `?${params.toString()}`;
 
-            const url = `/api/recipe/read/pdf${params.toString() ? '?' + params.toString() : ''}`
 
             const res = await fetch(url)
             if (!res.ok) throw new Error('Erro ao gerar PDF')
