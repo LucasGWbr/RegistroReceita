@@ -75,8 +75,13 @@ public class recipeController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDateTime dateTime
     ) {
+        List<recipes> list = null;
+        if(type != null && dateTime != null){
+            list = recipeService.getFilteredRecipes(type, LocalDate.from(dateTime));
+        }else{
+            list = recipeService.getAllRecipes();
+        }
 
-        List<recipes> list = recipeService.getFilteredRecipes(type, LocalDate.from(dateTime));
 
         ByteArrayInputStream pdf = PdfService.generate(list);
 
