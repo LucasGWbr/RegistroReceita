@@ -21,10 +21,10 @@ public class recipes {
     @Column(name = "recipe_type")
     private String recipeType;
 
-    private LocalDateTime CreatedAt;
+    private LocalDateTime createdAt;
     @PrePersist
     protected void onCreate() {
-        CreatedAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 
 }
