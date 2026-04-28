@@ -7,6 +7,7 @@ import br.univates.repository.recipeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,5 +39,19 @@ public class recipeService {
             throw new RuntimeException("Receita não encontrada");
         }
         recipeRepository.deleteById(id);
+    }
+
+    public List<recipes> getFilteredRecipes(String type, LocalDateTime dateTime)
+    {
+        if (type != null && dateTime != null) {
+            return recipeRepository.findByRecipeTypeAndCreatedAt(type, dateTime);
+        }
+        if (type != null) {
+            return recipeRepository.findByRecipeType(type);
+        }
+        if (dateTime != null) {
+            return recipeRepository.findByCreatedAt(dateTime);
+        }
+        return null;
     }
 }

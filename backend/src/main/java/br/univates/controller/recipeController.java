@@ -3,10 +3,12 @@ package br.univates.controller;
 import br.univates.dtos.recipeDTO;
 import br.univates.model.recipes;
 import br.univates.service.recipeService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,6 +28,17 @@ public class recipeController {
     @GetMapping("/read/all")
     public ResponseEntity<List<recipes>> getAllRecipes(){
         return ResponseEntity.ok(recipeService.getAllRecipes());
+    }
+
+    @GetMapping("/read/filter")
+    public ResponseEntity<List<recipes>> getFilteredRecipes(
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            LocalDateTime dateTime
+    )
+    {
+        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, dateTime));
     }
 
     @PutMapping("/update/{id}")
