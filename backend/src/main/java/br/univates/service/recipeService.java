@@ -8,7 +8,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.time.LocalDate;
 
 @Service
 public class recipeService {
@@ -41,18 +43,27 @@ public class recipeService {
         recipeRepository.deleteById(id);
     }
 
-    public List<recipes> getFilteredRecipes(String type, LocalDateTime dateTime)
-    {
-        if (type != null && dateTime != null) {
-            return recipeRepository.findByRecipeTypeAndCreatedAt(type, dateTime);
+    public List<recipes> getFilteredRecipes(String type, LocalDate date) {
+        LocalDateTime startOfDay = null;
+        LocalDateTime endOfDay = null;
+
+        if (date != null) {
+            startOfDay = date.atStartOfDay(); // 00:00:00
+            endOfDay = date.atTime(LocalTime.MAX); // 23:59:59.999999
+        }
+
+        // Lógica de Filtros
+        if (type != null && date != null) {
+            return recipeRepository.findByRecipeTypeAndCreatedAtBetween(type, startOfDay, endOfDay);
+        }
+        if (date != null) {
+            return recipeRepository.findByCreatedAtBetween(startOfDay, endOfDay);
         }
         if (type != null) {
             return recipeRepository.findByRecipeType(type);
         }
-        if (dateTime != null) {
-            return recipeRepository.findByCreatedAt(dateTime);
-        }
-        return null;
+
+        return recipeRepository.findAll();
     }
 
 

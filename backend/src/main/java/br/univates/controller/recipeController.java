@@ -46,7 +46,7 @@ public class recipeController {
             LocalDateTime dateTime
     )
     {
-        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, dateTime));
+        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, LocalDate.from(dateTime)));
     }
 
     @PutMapping("/update/{id}")
@@ -76,7 +76,7 @@ public class recipeController {
             LocalDateTime dateTime
     ) {
 
-        List<recipes> list = recipeService.getFilteredRecipes(type, dateTime);
+        List<recipes> list = recipeService.getFilteredRecipes(type, LocalDate.from(dateTime));
 
         ByteArrayInputStream pdf = PdfService.generate(list);
 

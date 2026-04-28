@@ -9,8 +9,8 @@ import java.util.List;
 public interface recipeRepository extends JpaRepository<recipes, Long> {
     List<recipes> findByRecipeType(String recipeType);
 
-    List<recipes> findByCreatedAt(LocalDateTime createdAt);
+    List<recipes> findByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
 
-    List<recipes> findByRecipeTypeAndCreatedAt(String recipeType, LocalDateTime createdAt);
+    List<recipes> findByRecipeTypeAndCreatedAtBetween(String recipeType, LocalDateTime start, LocalDateTime end);
 
 }
