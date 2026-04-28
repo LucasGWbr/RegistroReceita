@@ -259,15 +259,15 @@ export default function Recipes({ user, onLogout }) {
                                         <div className={styles.cardHeader}>
                                             <span className={styles.emoji}>{emoji}</span>
                                             <span className={styles.badge} style={{ background: colors.bg, color: colors.text }}>
-                                                {recipe.recipeType ?? 'Sem tipo'}
-                                            </span>
+                        {recipe.recipeType ?? 'Sem tipo'}
+                      </span>
                                         </div>
                                         <h2 className={styles.cardTitle}>{recipe.name ?? `Receita ${i + 1}`}</h2>
                                         {recipe.description && <p className={styles.cardDesc}>{recipe.description}</p>}
                                         <div className={styles.cardFooter}>
-                                            <span className={styles.price}>
-                                                {recipe.price != null ? `R$ ${Number(recipe.price).toFixed(2).replace('.', ',')}` : '—'}
-                                            </span>
+                      <span className={styles.price}>
+                        {recipe.price != null ? `R$ ${Number(recipe.price).toFixed(2).replace('.', ',')}` : '—'}
+                      </span>
                                             <div className={styles.cardActions}>
                                                 <button onClick={() => openEdit(recipe)} className={styles.editBtn}>Editar</button>
                                                 <button onClick={() => handleDelete(recipe.id)} className={styles.deleteBtn}>Deletar</button>
