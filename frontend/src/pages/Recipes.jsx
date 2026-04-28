@@ -196,51 +196,48 @@ export default function Recipes({ user, onLogout }) {
             {/* Filtros */}
             <div className={styles.filterSection}>
                 <div className={styles.filterContainer}>
-                    <div className={styles.filterGroup}>
-                        <label>📅 Data</label>
-                        <input
-                            type="date"
-                            value={filterDate}
-                            onChange={(e) => setFilterDate(e.target.value)}
-                            className={styles.filterInput}
-                        />
+                    <div className={styles.filterInputsGroup}>
+                        <div className={styles.filterGroup}>
+                            <label>📅 Data</label>
+                            <input
+                                type="date"
+                                value={filterDate}
+                                onChange={(e) => setFilterDate(e.target.value)}
+                                className={styles.filterInput}
+                            />
+                        </div>
+
+                        <div className={styles.filterGroup}>
+                            <label>🏷️ Tipo</label>
+                            <select
+                                value={filterType}
+                                onChange={(e) => setFilterType(e.target.value)}
+                                className={styles.filterInput}
+                            >
+                                <option value="">Todos os tipos</option>
+                                {recipeTypes.map(type => (
+                                    <option key={type} value={type}>{type}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className={styles.filterActions}>
+                            <button onClick={handleFilter} className={styles.filterBtn}>
+                                🔍 Filtrar
+                            </button>
+                            <button onClick={handleClearFilters} className={styles.clearBtn}>
+                                ✕ Limpar
+                            </button>
+                        </div>
                     </div>
 
-                    <div className={styles.filterGroup}>
-                        <label>🏷️ Tipo</label>
-                        <select
-                            value={filterType}
-                            onChange={(e) => setFilterType(e.target.value)}
-                            className={styles.filterInput}
-                        >
-                            <option value="">Todos os tipos</option>
-                            {recipeTypes.map(type => (
-                                <option key={type} value={type}>{type}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className={styles.filterActions}>
-                        <button
-                            onClick={handleFilter}
-                            className={styles.filterBtn}
-                        >
-                            🔍 Filtrar
-                        </button>
-                        <button
-                            onClick={handleClearFilters}
-                            className={styles.clearBtn}
-                        >
-                            ✕ Limpar
-                        </button>
-                        <button
-                            onClick={handleDownloadPdf}
-                            disabled={generatingPdf}
-                            className={styles.pdfBtn}
-                        >
-                            {generatingPdf ? '⏳ Gerando...' : '📄 Gerar PDF'}
-                        </button>
-                    </div>
+                    <button
+                        onClick={handleDownloadPdf}
+                        disabled={generatingPdf}
+                        className={styles.pdfBtn}
+                    >
+                        {generatingPdf ? '⏳ Gerando...' : '📄 Gerar PDF'}
+                    </button>
                 </div>
             </div>
 

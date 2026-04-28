@@ -336,3 +336,108 @@
     opacity: 0.6;
     cursor: not-allowed;
 }
+.filterSection {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: space-between; /* Joga o PDF para a direita */
+    align-items: flex-end; /* Alinha botões com a base dos inputs */
+    gap: 1rem;
+    flex-wrap: wrap; /* Responsivo para telas menores */
+}
+
+.filterInputsGroup {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filterGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filterGroup label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.filterInput {
+    padding: 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    min-width: 180px;
+    height: 40px; /* Altura fixa para alinhar com botões */
+}
+
+.filterActions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Estilização dos Botões */
+.filterBtn, .clearBtn, .pdfBtn {
+    padding: 0 1.2rem;
+    height: 40px; /* Mesma altura do input */
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.filterBtn {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.filterBtn:hover { background-color: #2563eb; }
+
+.clearBtn {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.clearBtn:hover { background-color: #e5e7eb; }
+
+.pdfBtn {
+    background-color: #10b981;
+    color: white;
+}
+
+.pdfBtn:hover:not(:disabled) { background-color: #059669; }
+
+.pdfBtn:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Ajuste Mobile */
+@media (max-width: 768px) {
+    .filterContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterInputsGroup {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterInput {
+        width: 100%;
+    }
+}
