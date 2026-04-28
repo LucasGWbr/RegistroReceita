@@ -16,7 +16,7 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .headerLeft {
@@ -25,7 +25,9 @@
     gap: 0.6rem;
 }
 
-.logo { font-size: 1.4rem; }
+.logo {
+    font-size: 1.4rem;
+}
 
 .header h1 {
     font-size: 1.25rem;
@@ -50,13 +52,20 @@
     color: #475569;
     transition: all 0.15s;
 }
+
 .logoutBtn:hover {
     background: #f1f5f9;
     border-color: #cbd5e1;
 }
 
 /* ── Main ── */
-.main { padding: 2rem; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+.main {
+    padding: 2rem;
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
 
 .count {
     font-size: 0.85rem;
@@ -83,10 +92,23 @@
     animation: spin 0.7s linear infinite;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-.status { color: #94a3b8; text-align: center; margin-top: 3rem; }
-.error  { color: #ef4444; text-align: center; margin-top: 3rem; }
+.status {
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.error {
+    color: #ef4444;
+    text-align: center;
+    margin-top: 3rem;
+}
 
 /* ── Grid ── */
 .grid {
@@ -110,7 +132,7 @@
 
 .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
 }
 
 .cardHeader {
@@ -119,7 +141,9 @@
     justify-content: space-between;
 }
 
-.emoji { font-size: 1.75rem; }
+.emoji {
+    font-size: 1.75rem;
+}
 
 .badge {
     font-size: 0.75rem;
@@ -173,7 +197,10 @@
     color: #334155;
     transition: background 0.15s;
 }
-.editBtn:hover { background: #f1f5f9; }
+
+.editBtn:hover {
+    background: #f1f5f9;
+}
 
 .deleteBtn {
     padding: 0.3rem 0.7rem;
@@ -184,7 +211,10 @@
     color: #dc2626;
     transition: background 0.15s;
 }
-.deleteBtn:hover { background: #fef2f2; }
+
+.deleteBtn:hover {
+    background: #fef2f2;
+}
 
 .addBtn {
     padding: 0.4rem 1rem;
@@ -196,13 +226,16 @@
     font-weight: 500;
     transition: background 0.15s;
 }
-.addBtn:hover { background: #2563eb; }
+
+.addBtn:hover {
+    background: #2563eb;
+}
 
 /* ── Modal ── */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -216,7 +249,7 @@
     padding: 1.75rem;
     width: 100%;
     max-width: 440px;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
 }
 
 .modal h2 {
@@ -241,7 +274,8 @@
     color: #475569;
 }
 
-.form input, .form textarea {
+.form input,
+.form textarea {
     padding: 0.55rem 0.75rem;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
@@ -251,9 +285,16 @@
     transition: border-color 0.15s;
     resize: vertical;
 }
-.form input:focus, .form textarea:focus { border-color: #3b82f6; }
 
-.formError { color: #dc2626; font-size: 0.82rem; }
+.form input:focus,
+.form textarea:focus {
+    border-color: #3b82f6;
+}
+
+.formError {
+    color: #dc2626;
+    font-size: 0.82rem;
+}
 
 .modalActions {
     display: flex;
@@ -271,7 +312,10 @@
     font-size: 0.875rem;
     transition: background 0.15s;
 }
-.cancelBtn:hover { background: #f8fafc; }
+
+.cancelBtn:hover {
+    background: #f8fafc;
+}
 
 .saveBtn {
     padding: 0.5rem 1.25rem;
@@ -283,5 +327,12 @@
     font-weight: 500;
     transition: background 0.15s;
 }
-.saveBtn:hover:not(:disabled) { background: #2563eb; }
-.saveBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.saveBtn:hover:not(:disabled) {
+    background: #2563eb;
+}
+
+.saveBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
