@@ -44,17 +44,26 @@ export default function Recipes({ user, onLogout }) {
     const loadRecipes = async (date = '', type = '') => {
         setLoading(true)
         try {
-            const params = new URLSearchParams()
-            if (date) params.append('date', date)
-            if (type) params.append('type', type)
+            const hasFilter = date || type;
 
-            const url = `/api/recipe/read/filter${params.toString() ? '?' + params.toString() : ''}`
+            // 2. Define a URL base: se houver filtro usa /filter, senão usa /all
+            let url = hasFilter ? '/api/recipe/read/filter' : '/api/recipe/read/all';
+
+            // 3. Adiciona os parâmetros apenas se houver filtro
+            if (hasFilter) {
+                const params = new URLSearchParams();
+                if (type) params.append('type', type);
+                if (date) params.append('dateTime', date+'T00:00:00');
+                url += `?${params.toString()}`;
+            }
 
             const res = await fetch(url)
             if (!res.ok) throw new Error('Erro ao carregar receitas')
 
-            const data = await res.json()
-            setRecipes(data)
+            const data = await res.json();
+            // Tratamento de segurança: Garante que recipes seja sempre um array
+            // (Evita erro de .map() se a API retornar um objeto único)
+            setRecipes(Array.isArray(data) ? data : (data ? [data] : []));
             setError('')
         } catch (err) {
             setError(err.message)
