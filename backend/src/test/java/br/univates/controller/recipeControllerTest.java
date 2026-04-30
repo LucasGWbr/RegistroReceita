@@ -1,12 +1,11 @@
 package br.univates.controller;
 
-import br.univates.dtos.recipeDTO;
-import br.univates.model.recipes;
+import br.univates.dtos.RecipeDto;
+import br.univates.model.Recipe;
 import br.univates.service.PdfService;
-import br.univates.service.recipeService;
+import br.univates.service.RecipeService;
 import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -27,8 +26,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(recipeController.class)
-class recipeControllerTest {
+@WebMvcTest(RecipeController.class)
+class RecipeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,19 +36,19 @@ class recipeControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
-    private recipeService recipeService;
+    private RecipeService recipeService;
 
     @MockitoBean
     private PdfService pdfService;
 
-    private recipes sampleRecipe;
-    private recipeDTO sampleDTO;
+    private Recipe sampleRecipe;
+    private RecipeDto sampleDTO;
 
     @BeforeEach
     void setUp() {
-        sampleDTO = new recipeDTO("Frango Grelhado", "Prato saudável", new BigDecimal("18.50"), "Salgado");
+        sampleDTO = new RecipeDto("Frango Grelhado", "Prato saudável", new BigDecimal("18.50"), "Salgado");
 
-        sampleRecipe = new recipes();
+        sampleRecipe = new Recipe();
         sampleRecipe.setId(1L);
         sampleRecipe.setName("Frango Grelhado");
         sampleRecipe.setDescription("Prato saudável");
@@ -63,7 +62,7 @@ class recipeControllerTest {
     // 13 rota deve retorna 201 quando criar
     @Test
     void shouldReturn201WhenCreatingRecipe() throws Exception {
-        when(recipeService.createRecipe(any(recipeDTO.class))).thenReturn(sampleRecipe);
+        when(recipeService.createRecipe(any(RecipeDto.class))).thenReturn(sampleRecipe);
 
         mockMvc.perform(post("/api/recipe/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,14 +76,14 @@ class recipeControllerTest {
     // 14 rota não pode chamar o service mais de uma vez
     @Test
     void shouldCallServiceOnceOnCreate() throws Exception {
-        when(recipeService.createRecipe(any(recipeDTO.class))).thenReturn(sampleRecipe);
+        when(recipeService.createRecipe(any(RecipeDto.class))).thenReturn(sampleRecipe);
 
         mockMvc.perform(post("/api/recipe/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(sampleDTO)))
                 .andExpect(status().isCreated());
 
-        verify(recipeService, times(1)).createRecipe(any(recipeDTO.class));
+        verify(recipeService, times(1)).createRecipe(any(RecipeDto.class));
     }
 
     // ─── GET /read/all ────────────────────────────────────────────────────────
@@ -115,7 +114,7 @@ class recipeControllerTest {
     // 17 rota deve retorna 200 quando atualizar ( e receita atualizada )
     @Test
     void shouldReturn200WhenUpdatingRecipe() throws Exception {
-        when(recipeService.updateRecipe(eq(1L), any(recipeDTO.class))).thenReturn(sampleRecipe);
+        when(recipeService.updateRecipe(eq(1L), any(RecipeDto.class))).thenReturn(sampleRecipe);
 
         mockMvc.perform(put("/api/recipe/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -127,7 +126,7 @@ class recipeControllerTest {
     // 18 retorna 404 quando a receita nao existe
     @Test
     void shouldReturn404WhenUpdatingNonExistentRecipe() throws Exception {
-        when(recipeService.updateRecipe(eq(99L), any(recipeDTO.class)))
+        when(recipeService.updateRecipe(eq(99L), any(RecipeDto.class)))
                 .thenThrow(new RuntimeException("Receita não encontrada"));
 
         mockMvc.perform(put("/api/recipe/update/99")

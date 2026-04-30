@@ -1,9 +1,12 @@
 package br.univates.repository;
 
-import br.univates.model.users;
+import br.univates.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface userRepository extends JpaRepository<users, Long> {
+import java.util.Optional;
 
-    users findByLogin(String login);
+public interface UserRepository extends JpaRepository<Users, Long> {
+
+    Optional<Users> findByEmail(String email);
+
 }

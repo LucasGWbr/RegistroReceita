@@ -1,9 +1,9 @@
 package br.univates.controller;
 
-import br.univates.dtos.recipeDTO;
-import br.univates.model.recipes;
+import br.univates.dtos.RecipeDto;
+import br.univates.model.Recipe;
 import br.univates.service.PdfService;
-import br.univates.service.recipeService;
+import br.univates.service.RecipeService;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -19,27 +19,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipe")
-public class recipeController {
-    private final recipeService recipeService;
-    private final PdfService PdfService;
-    public recipeController(recipeService recipeService, PdfService pdfService) {
+public class RecipeController {
+    private final RecipeService recipeService;
+    private final PdfService pdfService;
+    public RecipeController(RecipeService recipeService, PdfService pdfService) {
         this.recipeService = recipeService;
-        PdfService = pdfService;
+        this.pdfService = pdfService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<recipes> createRecipe(@RequestBody recipeDTO recipeDTO) {
-        recipes created = recipeService.createRecipe(recipeDTO);
+    public ResponseEntity<Recipe> createRecipe(@RequestBody RecipeDto recipeDTO) {
+        Recipe created = recipeService.createRecipe(recipeDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping("/read/all")
-    public ResponseEntity<List<recipes>> getAllRecipes(){
+    public ResponseEntity<List<Recipe>> getAllRecipes(){
         return ResponseEntity.ok(recipeService.getAllRecipes());
     }
 
     @GetMapping("/read/filter")
-    public ResponseEntity<List<recipes>> getFilteredRecipes(
+    public ResponseEntity<List<Recipe>> getFilteredRecipes(
             @RequestParam(required = false) String type,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -50,7 +50,7 @@ public class recipeController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<recipes> updateRecipe(@PathVariable Long id, @RequestBody recipeDTO recipeDTO) {
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody RecipeDto recipeDTO) {
         try {
             return ResponseEntity.ok(recipeService.updateRecipe(id, recipeDTO));
         } catch (RuntimeException e) {
@@ -75,7 +75,7 @@ public class recipeController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDateTime dateTime
     ) {
-        List<recipes> list = null;
+        List<Recipe> list = null;
         if(type != null && dateTime != null){
             list = recipeService.getFilteredRecipes(type, LocalDate.from(dateTime));
         }else{
@@ -83,7 +83,7 @@ public class recipeController {
         }
 
 
-        ByteArrayInputStream pdf = PdfService.generate(list);
+        ByteArrayInputStream pdf = pdfService.generate(list);
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=receitas.pdf")

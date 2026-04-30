@@ -1,4 +1,4 @@
 package br.univates.dtos;
 
-public record loginDTO(String login, String password) {
+public record LoginDto(String login, String password) {
 }

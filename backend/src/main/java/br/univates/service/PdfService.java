@@ -1,18 +1,19 @@
 package br.univates.service;
 
-import br.univates.model.recipes;
+import br.univates.model.Recipe;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.*;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class PdfService {
 
-    public ByteArrayInputStream generate(List<recipes> recipes) {
+    public ByteArrayInputStream generate(List<Recipe> recipes) throws IOException {
 
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -39,7 +40,7 @@ public class PdfService {
             addHeader(table, "Preço");
             addHeader(table, "Tipo");
 
-            for (recipes r : recipes) {
+            for (Recipe r : recipes) {
                 table.addCell(r.getName());
                 table.addCell(r.getDescription());
                 table.addCell(r.getPrice().toString());
@@ -50,7 +51,7 @@ public class PdfService {
             document.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IOException("Erro ao gerar PDF", e);
         }
 
         return new ByteArrayInputStream(out.toByteArray());

@@ -1,11 +1,12 @@
 package br.univates.controller;
 
-import br.univates.dtos.loginDTO;
-import br.univates.dtos.userDTO;
-import br.univates.model.users;
+import br.univates.dtos.AuthenticationResponseDTO;
+import br.univates.dtos.LoginDto;
+import br.univates.dtos.UserDto;
+import br.univates.model.Users;
 import br.univates.service.EmailService;
-import br.univates.service.loginService;
-import br.univates.service.userService;
+import br.univates.service.LoginService;
+import br.univates.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,20 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-public class userController {
+public class UserController {
 
-    private final loginService loginService;
-    private final userService userService;
+    private final LoginService loginService;
+    private final UserService userService;
     private final EmailService emailService;
-    public userController(loginService loginService, userService userService, EmailService emailService) {
+    public UserController(LoginService loginService, UserService userService, EmailService emailService) {
         this.loginService = loginService;
         this.userService = userService;
         this.emailService = emailService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody loginDTO loginDTO) {
-        users user = loginService.login(loginDTO);
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDTO) {
+        AuthenticationResponseDTO user = loginService.login(loginDTO);
         if(user != null){
             return ResponseEntity.ok(user);
         }else{
@@ -36,10 +37,10 @@ public class userController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody userDTO userDTO) {
-        users user = userService.createUser(userDTO);
+    public ResponseEntity<?> register(@RequestBody UserDto userDTO) {
+        Users user = userService.createUser(userDTO);
         if(user != null){
-            emailService.sentMail(user.getLogin(),"Bem vindo a plataforma!","Olá, "+user.getName()+ " seja bem vindo a plataforma");
+            emailService.sentMail(user.getEmail(),"Bem vindo a plataforma!","Olá, "+user.getName()+ " seja bem vindo a plataforma");
             return ResponseEntity.ok(user);
         }else{
             return ResponseEntity.badRequest().build();

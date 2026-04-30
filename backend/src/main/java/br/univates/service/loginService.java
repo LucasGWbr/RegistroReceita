@@ -1,25 +1,40 @@
 package br.univates.service;
 
-import br.univates.dtos.loginDTO;
-import br.univates.model.users;
-import br.univates.repository.userRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import br.univates.config.JwtService;
+import br.univates.dtos.AuthenticationResponseDTO;
+import br.univates.dtos.LoginDto;
+import br.univates.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
-public class loginService {
-    private final BCryptPasswordEncoder encoder;
-    private final userRepository userRepository;
+public class LoginService {
+    private final UserRepository userRepository;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public loginService(BCryptPasswordEncoder encoder, userRepository userRepository) {
-        this.encoder = encoder;
+    public LoginService(UserRepository userRepository, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
-    public users login(loginDTO loginDTO) {
-        users user = userRepository.findByLogin(loginDTO.login());
-        if (user != null && encoder.matches(loginDTO.password(), user.getPassword())) {
-            return user;
-        }
-        return null;
+    public AuthenticationResponseDTO login(LoginDto loginDTO) {
+        // 1. AUTENTICAR
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginDTO.login(), // ou getUsername()
+                        loginDTO.password()
+                )
+        );
+
+        // 2. GERAR O TOKEN
+        var user = userRepository.findByEmail(loginDTO.login())
+                .orElseThrow();
+        // Gera o token JWT
+        String jwtToken = jwtService.generateToken(user); // 'user' deve implementar UserDetails
+
+        // 3. RETORNAR O TOKEN
+        return new AuthenticationResponseDTO(jwtToken,user.getName(),user.getEmail(),user.getId());
     }
 }

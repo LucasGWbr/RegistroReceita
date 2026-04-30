@@ -1,9 +1,9 @@
 package br.univates.service;
 
 
-import br.univates.dtos.recipeDTO;
-import br.univates.model.recipes;
-import br.univates.repository.recipeRepository;
+import br.univates.dtos.RecipeDto;
+import br.univates.model.Recipe;
+import br.univates.repository.RecipeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -13,37 +13,36 @@ import java.util.List;
 import java.time.LocalDate;
 
 @Service
-public class recipeService {
-    private final recipeRepository recipeRepository;
+public class RecipeService {
+    private final RecipeRepository recipeRepository;
 
-    public recipeService(recipeRepository recipeRepository) {
+    public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
 
-    public recipes createRecipe(recipeDTO recipeDTO){
-        recipes recipe = new recipes();
+    public Recipe createRecipe(RecipeDto recipeDTO){
+        Recipe recipe = new Recipe();
         BeanUtils.copyProperties(recipeDTO, recipe);
         return recipeRepository.save(recipe);
     }
-    public List<recipes> getAllRecipes(){
+    public List<Recipe> getAllRecipes(){
         return recipeRepository.findAll();
     }
 
-    public recipes updateRecipe(Long id, recipeDTO recipeDTO) {
-        recipes recipe = recipeRepository.findById(id)
+    public Recipe updateRecipe(Long id, RecipeDto recipeDTO) {
+        Recipe recipe = recipeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Receita não encontrada"));
         BeanUtils.copyProperties(recipeDTO, recipe);
         return recipeRepository.save(recipe);
     }
 
     public void deleteRecipe(Long id) {
-        if (!recipeRepository.existsById(id)) {
-            throw new RuntimeException("Receita não encontrada");
-        }
-        recipeRepository.deleteById(id);
+        var recipe = recipeRepository.findById(id)
+                .orElseThrow();
+        recipeRepository.deleteById(recipe.getId());
     }
 
-    public List<recipes> getFilteredRecipes(String type, LocalDate date) {
+    public List<Recipe> getFilteredRecipes(String type, LocalDate date) {
         LocalDateTime startOfDay = null;
         LocalDateTime endOfDay = null;
 

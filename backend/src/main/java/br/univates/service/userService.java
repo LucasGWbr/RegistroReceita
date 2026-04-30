@@ -1,26 +1,27 @@
 package br.univates.service;
 
-import br.univates.dtos.userDTO;
-import br.univates.model.users;
-import br.univates.repository.userRepository;
+
+import br.univates.dtos.UserDto;
+import br.univates.model.Users;
+import br.univates.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class userService {
+public class UserService {
     private final BCryptPasswordEncoder encoder;
-    private final userRepository userRepository;
+    private final UserRepository userRepository;
 
-    public userService(BCryptPasswordEncoder encoder, userRepository userRepository) {
+    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository) {
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
 
-    public users createUser(userDTO userDTO) {
+    public Users createUser(UserDto userDTO) {
         String password = encoder.encode(userDTO.password());
         try {
-            users users = new users();
+            Users users = new Users();
             BeanUtils.copyProperties(userDTO, users);
             users.setPassword(password);
             return userRepository.save(users);

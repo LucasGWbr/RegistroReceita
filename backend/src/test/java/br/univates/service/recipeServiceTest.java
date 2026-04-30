@@ -1,10 +1,9 @@
 package br.univates.service;
 
-import br.univates.dtos.recipeDTO;
-import br.univates.model.recipes;
-import br.univates.repository.recipeRepository;
+import br.univates.dtos.RecipeDto;
+import br.univates.model.Recipe;
+import br.univates.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,22 +23,22 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class recipeServiceTest {
+class RecipeServiceTest {
 
     @Mock
-    private recipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
 
     @InjectMocks
-    private recipeService recipeService;
+    private RecipeService recipeService;
 
-    private recipes sampleRecipe;
-    private recipeDTO sampleDTO;
+    private Recipe sampleRecipe;
+    private RecipeDto sampleDTO;
 
     @BeforeEach
     void setUp() {
-        sampleDTO = new recipeDTO("Bolo de Cenoura", "Receita clássica", new BigDecimal("25.00"), "Doce");
+        sampleDTO = new RecipeDto("Bolo de Cenoura", "Receita clássica", new BigDecimal("25.00"), "Doce");
 
-        sampleRecipe = new recipes();
+        sampleRecipe = new Recipe();
         sampleRecipe.setId(1L);
         sampleRecipe.setName("Bolo de Cenoura");
         sampleRecipe.setDescription("Receita clássica");
@@ -53,22 +52,22 @@ class recipeServiceTest {
     // 1 criar receita
     @Test
     void shouldCreateRecipeSuccessfully() {
-        when(recipeRepository.save(any(recipes.class))).thenReturn(sampleRecipe);
+        when(recipeRepository.save(any(Recipe.class))).thenReturn(sampleRecipe);
 
-        recipes result = recipeService.createRecipe(sampleDTO);
+        Recipe result = recipeService.createRecipe(sampleDTO);
 
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("Bolo de Cenoura");
         assertThat(result.getRecipeType()).isEqualTo("Doce");
-        verify(recipeRepository, times(1)).save(any(recipes.class));
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
 
     //2 retornar dados ao criar
     @Test
     void shouldMapAllDtoFieldsOnCreate() {
-        when(recipeRepository.save(any(recipes.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(recipeRepository.save(any(Recipe.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        recipes result = recipeService.createRecipe(sampleDTO);
+        Recipe result = recipeService.createRecipe(sampleDTO);
 
         assertThat(result.getName()).isEqualTo(sampleDTO.name());
         assertThat(result.getDescription()).isEqualTo(sampleDTO.description());
@@ -83,10 +82,10 @@ class recipeServiceTest {
     void shouldReturnAllRecipes() {
         when(recipeRepository.findAll()).thenReturn(List.of(sampleRecipe));
 
-        List<recipes> result = recipeService.getAllRecipes();
+        List<Recipe> result = recipeService.getAllRecipes();
 
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getName()).isEqualTo("Bolo de Cenoura");
+        assertThat(result.getFirst().getName()).isEqualTo("Bolo de Cenoura");
         verify(recipeRepository, times(1)).findAll();
     }
 
@@ -95,7 +94,7 @@ class recipeServiceTest {
     void shouldReturnEmptyListWhenNoRecipes() {
         when(recipeRepository.findAll()).thenReturn(Collections.emptyList());
 
-        List<recipes> result = recipeService.getAllRecipes();
+        List<Recipe> result = recipeService.getAllRecipes();
 
         assertThat(result).isEmpty();
     }
@@ -105,11 +104,11 @@ class recipeServiceTest {
     // 5 atualizar receita
     @Test
     void shouldUpdateExistingRecipeSuccessfully() {
-        recipeDTO updateDTO = new recipeDTO("Bolo Atualizado", "Desc nova", new BigDecimal("30.00"), "Salgado");
+        RecipeDto updateDTO = new RecipeDto("Bolo Atualizado", "Desc nova", new BigDecimal("30.00"), "Salgado");
         when(recipeRepository.findById(1L)).thenReturn(Optional.of(sampleRecipe));
-        when(recipeRepository.save(any(recipes.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(recipeRepository.save(any(Recipe.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        recipes result = recipeService.updateRecipe(1L, updateDTO);
+        Recipe result = recipeService.updateRecipe(1L, updateDTO);
 
         assertThat(result.getName()).isEqualTo("Bolo Atualizado");
         assertThat(result.getRecipeType()).isEqualTo("Salgado");
@@ -160,7 +159,7 @@ class recipeServiceTest {
     void shouldFilterByTypeOnly() {
         when(recipeRepository.findByRecipeType("Doce")).thenReturn(List.of(sampleRecipe));
 
-        List<recipes> result = recipeService.getFilteredRecipes("Doce", null);
+        List<Recipe> result = recipeService.getFilteredRecipes("Doce", null);
 
         assertThat(result).hasSize(1);
         verify(recipeRepository).findByRecipeType("Doce");
@@ -176,7 +175,7 @@ class recipeServiceTest {
 
         when(recipeRepository.findByCreatedAtBetween(start, end)).thenReturn(List.of(sampleRecipe));
 
-        List<recipes> result = recipeService.getFilteredRecipes(null, today);
+        List<Recipe> result = recipeService.getFilteredRecipes(null, today);
 
         assertThat(result).hasSize(1);
         verify(recipeRepository).findByCreatedAtBetween(start, end);
@@ -193,7 +192,7 @@ class recipeServiceTest {
         when(recipeRepository.findByRecipeTypeAndCreatedAtBetween("Doce", start, end))
                 .thenReturn(List.of(sampleRecipe));
 
-        List<recipes> result = recipeService.getFilteredRecipes("Doce", today);
+        List<Recipe> result = recipeService.getFilteredRecipes("Doce", today);
 
         assertThat(result).hasSize(1);
         verify(recipeRepository).findByRecipeTypeAndCreatedAtBetween("Doce", start, end);
@@ -204,7 +203,7 @@ class recipeServiceTest {
     void shouldReturnAllWhenNoFilterProvided() {
         when(recipeRepository.findAll()).thenReturn(List.of(sampleRecipe));
 
-        List<recipes> result = recipeService.getFilteredRecipes(null, null);
+        List<Recipe> result = recipeService.getFilteredRecipes(null, null);
 
         assertThat(result).hasSize(1);
         verify(recipeRepository).findAll();
