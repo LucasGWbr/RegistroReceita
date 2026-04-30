@@ -37,12 +37,13 @@ services:
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_PROFILES_ACTIVE: prod
+      FRONTEND_URL: http://localhost:4173
     ports:
       - "8080:8080"
     networks:
       - app-network
 
-  # ── React + Vite (Nginx) ────────────────────────────────────────────────────
+  # ── React + Vite ────────────────────────────────────────────────────
   frontend:
     build:
       context: ./frontend         # pasta com o Dockerfile do React
