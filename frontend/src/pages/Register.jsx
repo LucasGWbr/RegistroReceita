@@ -39,15 +39,9 @@ export default function Register() {
                     <p className={styles.success}>Cadastro realizado! Redirecionando...</p>
                 ) : (
                     <form onSubmit={handleSubmit} className={styles.form}>
-                        <label>Nome
-                            <input name="name" type="text" value={form.name} onChange={handleChange} required />
-                        </label>
-                        <label>Login
-                            <input name="login" type="text" value={form.login} onChange={handleChange} required />
-                        </label>
-                        <label>Senha
-                            <input name="password" type="password" value={form.password} onChange={handleChange} required />
-                        </label>
+                        <label>Nome <input name="name" type="text" value={form.name} onChange={handleChange} required /></label>
+                        <label>Email<input name="email" type="email" value={form.login} onChange={handleChange} required /></label>
+                        <label>Senha<input name="password" type="password" value={form.password} onChange={handleChange} required /></label>
                         {error && <p className={styles.error}>{error}</p>}
                         <button type="submit" disabled={loading} className={styles.btn}>
                             {loading ? 'Cadastrando...' : 'Cadastrar'}

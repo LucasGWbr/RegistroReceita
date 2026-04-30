@@ -28,8 +28,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login"    element={!user ? <Login onLogin={handleLogin} /> : <Navigate to="/recipes" />} />
-        <Route path="/register" element={!user ? <Register /> : <Navigate to="/recipes" />} />
+        <Route path="/login"    element={user ? <Navigate to="/recipes"/> : <Login onLogin={handleLogin}/>} />
+        <Route path="/register" element={user ? <Navigate to="/recipes"/> : <Register/>} />
         <Route path="/recipes"  element={user  ? <Recipes user={user} onLogout={handleLogout} /> : <Navigate to="/login" />} />
         <Route path="*"         element={<Navigate to={user ? '/recipes' : '/login'} />} />
       </Routes>

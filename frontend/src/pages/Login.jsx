@@ -36,8 +36,8 @@ export default function Login({ onLogin }) {
             <div className={styles.card}>
                 <h1 className={styles.title}>Entrar</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <label>Login
-                        <input name="login" type="text" value={form.login} onChange={handleChange} required />
+                    <label>Email
+                        <input name="email" type="email" value={form.login} onChange={handleChange} required />
                     </label>
                     <label>Senha
                         <input name="password" type="password" value={form.password} onChange={handleChange} required />

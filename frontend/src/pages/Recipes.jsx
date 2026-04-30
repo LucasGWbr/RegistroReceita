@@ -53,11 +53,15 @@ export default function Recipes({ user, onLogout }) {
             if (hasFilter) {
                 const params = new URLSearchParams();
                 if (type) params.append('type', type);
-                if (date) params.append('dateTime', date+'T00:00:00');
+                if (date) params.append('dateTime', date + 'T00:00:00');
                 url += `?${params.toString()}`;
             }
 
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             if (!res.ok) throw new Error('Erro ao carregar receitas')
 
             const data = await res.json();
@@ -93,15 +97,19 @@ export default function Recipes({ user, onLogout }) {
             const hasFilter = filterDate || filterType;
 
             let url = '/api/recipe/read/pdf';
-            
-            if(hasFilter){
+
+            if (hasFilter) {
                 const params = new URLSearchParams();
                 if (filterType) params.append('type', filterType);
-                if (filterDate) params.append('dateTime', filterDate+'T00:00:00');
+                if (filterDate) params.append('dateTime', filterDate + 'T00:00:00');
                 url += `?${params.toString()}`;
             }
 
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             if (!res.ok) throw new Error('Erro ao gerar PDF')
 
             const blob = await res.blob()
@@ -155,7 +163,10 @@ export default function Recipes({ user, onLogout }) {
             const method = editing ? 'PUT' : 'POST'
             const res = await fetch(url, {
                 method,
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
                 body: JSON.stringify({ ...form, price: Number(form.price) }),
             })
             if (!res.ok) throw new Error('Erro ao salvar receita')
@@ -172,7 +183,10 @@ export default function Recipes({ user, onLogout }) {
         if (!window.confirm('Deletar esta receita?')) return
         try {
             const res = await fetch(`/api/recipe/delete/${id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
             if (!res.ok) throw new Error('Erro ao deletar')
             loadRecipes(filterDate, filterType)
@@ -270,15 +284,15 @@ export default function Recipes({ user, onLogout }) {
                                         <div className={styles.cardHeader}>
                                             <span className={styles.emoji}>{emoji}</span>
                                             <span className={styles.badge} style={{ background: colors.bg, color: colors.text }}>
-                        {recipe.recipeType ?? 'Sem tipo'}
-                      </span>
+                                                {recipe.recipeType ?? 'Sem tipo'}
+                                            </span>
                                         </div>
                                         <h2 className={styles.cardTitle}>{recipe.name ?? `Receita ${i + 1}`}</h2>
                                         {recipe.description && <p className={styles.cardDesc}>{recipe.description}</p>}
                                         <div className={styles.cardFooter}>
-                      <span className={styles.price}>
-                        {recipe.price != null ? `R$ ${Number(recipe.price).toFixed(2).replace('.', ',')}` : '—'}
-                      </span>
+                                            <span className={styles.price}>
+                                                {recipe.price != null ? `R$ ${Number(recipe.price).toFixed(2).replace('.', ',')}` : '—'}
+                                            </span>
                                             <div className={styles.cardActions}>
                                                 <button onClick={() => openEdit(recipe)} className={styles.editBtn}>Editar</button>
                                                 <button onClick={() => handleDelete(recipe.id)} className={styles.deleteBtn}>Deletar</button>

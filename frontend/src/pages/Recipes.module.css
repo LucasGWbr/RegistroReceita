@@ -40,22 +40,22 @@
     align-items: center;
     gap: 1rem;
     font-size: 0.875rem;
-    color: #64748b;
+    color: #475569; /* Ajustado para melhor contraste */
 }
 
 .logoutBtn {
     padding: 0.4rem 1rem;
     background: transparent;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     font-size: 0.85rem;
-    color: #475569;
+    color: #334155; /* Ajustado de #475569 para melhor leitura */
     transition: all 0.15s;
 }
 
 .logoutBtn:hover {
     background: #f1f5f9;
-    border-color: #cbd5e1;
+    border-color: #94a3b8;
 }
 
 /* ── Main ── */
@@ -69,7 +69,7 @@
 
 .count {
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: #64748b; /* Ajustado de #94a3b8 para contraste */
     margin-bottom: 1.25rem;
 }
 
@@ -80,14 +80,14 @@
     align-items: center;
     gap: 1rem;
     margin-top: 4rem;
-    color: #94a3b8;
+    color: #64748b; /* Ajustado de #94a3b8 */
 }
 
 .spinner {
     width: 32px;
     height: 32px;
     border: 3px solid #e2e8f0;
-    border-top-color: #3b82f6;
+    border-top-color: #2563eb; /* Azul ajustado */
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
 }
@@ -99,13 +99,13 @@
 }
 
 .status {
-    color: #94a3b8;
+    color: #64748b; /* Ajustado de #94a3b8 */
     text-align: center;
     margin-top: 3rem;
 }
 
 .error {
-    color: #ef4444;
+    color: #dc2626; /* Vermelho ajustado para contraste */
     text-align: center;
     margin-top: 3rem;
 }
@@ -152,6 +152,7 @@
     border-radius: 999px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    /* Dica: se o fundo da badge for dinâmico, garanta cor escura para fundos claros */
 }
 
 .cardTitle {
@@ -163,7 +164,7 @@
 
 .cardDesc {
     font-size: 0.875rem;
-    color: #64748b;
+    color: #475569; /* Ajustado de #64748b para ser mais legível */
     line-height: 1.55;
     flex: 1;
 }
@@ -180,7 +181,7 @@
 .price {
     font-size: 1.1rem;
     font-weight: 700;
-    color: #16a34a;
+    color: #15803d; /* Verde levemente mais escuro que o anterior */
 }
 
 .cardActions {
@@ -191,10 +192,10 @@
 .editBtn {
     padding: 0.3rem 0.7rem;
     font-size: 0.8rem;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #94a3b8; /* Borda mais visível */
     border-radius: 5px;
     background: #fff;
-    color: #334155;
+    color: #1e293b; /* Texto mais escuro */
     transition: background 0.15s;
 }
 
@@ -205,10 +206,10 @@
 .deleteBtn {
     padding: 0.3rem 0.7rem;
     font-size: 0.8rem;
-    border: 1px solid #fca5a5;
+    border: 1px solid #f87171; /* Borda mais forte */
     border-radius: 5px;
     background: #fff;
-    color: #dc2626;
+    color: #b91c1c; /* Vermelho mais forte */
     transition: background 0.15s;
 }
 
@@ -218,7 +219,7 @@
 
 .addBtn {
     padding: 0.4rem 1rem;
-    background: #3b82f6;
+    background: #2563eb; /* Azul ajustado */
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -228,14 +229,14 @@
 }
 
 .addBtn:hover {
-    background: #2563eb;
+    background: #1d4ed8;
 }
 
 /* ── Modal ── */
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5); /* Escurecido para foco */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -249,7 +250,7 @@
     padding: 1.75rem;
     width: 100%;
     max-width: 440px;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
 }
 
 .modal h2 {
@@ -270,14 +271,14 @@
     flex-direction: column;
     gap: 0.3rem;
     font-size: 0.85rem;
-    font-weight: 500;
-    color: #475569;
+    font-weight: 600; /* Peso aumentado */
+    color: #334155;
 }
 
 .form input,
 .form textarea {
     padding: 0.55rem 0.75rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1; /* Borda ajustada */
     border-radius: 6px;
     font-size: 0.9rem;
     font-family: inherit;
@@ -288,7 +289,7 @@
 
 .form input:focus,
 .form textarea:focus {
-    border-color: #3b82f6;
+    border-color: #2563eb;
 }
 
 .formError {
@@ -305,10 +306,10 @@
 
 .cancelBtn {
     padding: 0.5rem 1rem;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     background: #fff;
-    color: #64748b;
+    color: #475569;
     font-size: 0.875rem;
     transition: background 0.15s;
 }
@@ -319,7 +320,7 @@
 
 .saveBtn {
     padding: 0.5rem 1.25rem;
-    background: #3b82f6;
+    background: #2563eb; /* Azul ajustado */
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -329,13 +330,14 @@
 }
 
 .saveBtn:hover:not(:disabled) {
-    background: #2563eb;
+    background: #1d4ed8;
 }
 
 .saveBtn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
 .filterSection {
     background-color: #ffffff;
     padding: 1.5rem;
@@ -346,10 +348,10 @@
 
 .filterContainer {
     display: flex;
-    justify-content: space-between; /* Joga o PDF para a direita */
-    align-items: flex-end; /* Alinha botões com a base dos inputs */
+    justify-content: space-between;
+    align-items: flex-end;
     gap: 1rem;
-    flex-wrap: wrap; /* Responsivo para telas menores */
+    flex-wrap: wrap;
 }
 
 .filterInputsGroup {
@@ -368,15 +370,15 @@
 .filterGroup label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: #4b5563;
+    color: #1e293b; /* Ajustado de #4b5563 para contraste */
 }
 
 .filterInput {
     padding: 0.6rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid #cbd5e1; /* Ajustado de #d1d5db */
     border-radius: 6px;
     min-width: 180px;
-    height: 40px; /* Altura fixa para alinhar com botões */
+    height: 40px;
 }
 
 .filterActions {
@@ -387,9 +389,9 @@
 /* Estilização dos Botões */
 .filterBtn, .clearBtn, .pdfBtn {
     padding: 0 1.2rem;
-    height: 40px; /* Mesma altura do input */
+    height: 40px;
     border-radius: 6px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     border: none;
@@ -400,28 +402,28 @@
 }
 
 .filterBtn {
-    background-color: #3b82f6;
+    background-color: #2563eb; /* Azul ajustado */
     color: white;
 }
 
-.filterBtn:hover { background-color: #2563eb; }
+.filterBtn:hover { background-color: #1d4ed8; }
 
 .clearBtn {
-    background-color: #f3f4f6;
-    color: #4b5563;
+    background-color: #f1f5f9; /* Mais visível */
+    color: #1e293b; /* Texto mais escuro */
 }
 
-.clearBtn:hover { background-color: #e5e7eb; }
+.clearBtn:hover { background-color: #e2e8f0; }
 
 .pdfBtn {
-    background-color: #10b981;
+    background-color: #047857; /* Verde ajustado */
     color: white;
 }
 
-.pdfBtn:hover:not(:disabled) { background-color: #059669; }
+.pdfBtn:hover:not(:disabled) { background-color: #047857; }
 
 .pdfBtn:disabled {
-    background-color: #9ca3af;
+    background-color: #94a3b8;
     cursor: not-allowed;
 }
 
