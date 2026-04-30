@@ -83,11 +83,15 @@ public class RecipeController {
         }
 
 
-        ByteArrayInputStream pdf = pdfService.generate(list);
+        try {
+            ByteArrayInputStream pdf = pdfService.generate(list);
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=receitas.pdf")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(new InputStreamResource(pdf));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=receitas.pdf")
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(new InputStreamResource(pdf));
     }
 }
