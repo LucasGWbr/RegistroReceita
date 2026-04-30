@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -132,7 +133,7 @@ class RecipeServiceTest {
     // 7 deletar receita
     @Test
     void shouldDeleteExistingRecipeSuccessfully() {
-        when(recipeRepository.existsById(1L)).thenReturn(true);
+        when(recipeRepository.findById(1L)).thenReturn(Optional.of(sampleRecipe));
         doNothing().when(recipeRepository).deleteById(1L);
 
         assertThatCode(() -> recipeService.deleteRecipe(1L)).doesNotThrowAnyException();
@@ -143,11 +144,11 @@ class RecipeServiceTest {
     // 8 erro ao deletar inexistente
     @Test
     void shouldThrowExceptionWhenDeletingNonExistentRecipe() {
-        when(recipeRepository.existsById(99L)).thenReturn(false);
+        when(recipeRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> recipeService.deleteRecipe(99L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("não encontrada");
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessageContaining("No value present");
 
         verify(recipeRepository, never()).deleteById(any());
     }
