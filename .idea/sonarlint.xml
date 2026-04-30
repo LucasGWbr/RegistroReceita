@@ -2,6 +2,12 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
+    <option name="fileExclusions">
+      <list>
+        <option value="FILE:src/main/resources/data.sql" />
+        <option value="FILE:docker-compose.yaml" />
+      </list>
+    </option>
     <option name="projectKey" value="LucasGWbr_RegistroReceita" />
     <option name="serverId" value="WEB" />
   </component>
