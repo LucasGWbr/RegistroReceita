@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDTO) {
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody LoginDto loginDTO) {
         AuthenticationResponseDTO user = loginService.login(loginDTO);
         if(user != null){
             return ResponseEntity.ok(user);
@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDTO) {
+    public ResponseEntity<Users> register(@RequestBody UserDto userDTO) {
         Users user = userService.createUser(userDTO);
         if(user != null){
             emailService.sentMail(user.getEmail(),"Bem vindo a plataforma!","Olá, "+user.getName()+ " seja bem vindo a plataforma");
