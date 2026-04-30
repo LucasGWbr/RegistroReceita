@@ -1,0 +1,27 @@
+name: Java CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pegar o código do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar o Java 21 no servidor
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Rodar o Build e os Testes
+        # O comando abaixo faz o terminal entrar na pasta certa antes de rodar o Maven
+        working-directory: ./backend
+        run: mvn clean package
