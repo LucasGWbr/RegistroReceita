@@ -1,9 +1,12 @@
 package br.univates.controller;
 
+import br.univates.config.JwtService;
 import br.univates.dtos.RecipeDto;
 import br.univates.model.Recipe;
 import br.univates.service.PdfService;
 import br.univates.service.RecipeService;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RecipeController.class)
+@WithMockUser
 class RecipeControllerTest {
 
     @Autowired
@@ -36,7 +40,13 @@ class RecipeControllerTest {
     private ObjectMapper objectMapper;
 
     @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
     private RecipeService recipeService;
+
+    @MockitoBean
+    private UserDetailsService userDetailsService;
 
     @MockitoBean
     private PdfService pdfService;
