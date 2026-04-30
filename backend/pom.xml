@@ -28,7 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
-        <sonar.organization>Lucas Gustavo Weber</sonar.organization>
+        <sonar.organization>lucasgwbr</sonar.organization>
         <sonar.projectKey>LucasGWbr_RegistroReceita</sonar.projectKey>
     </properties>
     <dependencies>
