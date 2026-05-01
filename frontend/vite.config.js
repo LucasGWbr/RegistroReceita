@@ -5,6 +5,7 @@ export default defineConfig(({ mode }) => {
   // Carrega as variáveis do .env
   const env = loadEnv(mode, process.cwd(), '');
 
+  console.log("URL DO BACKEND:", env.VITE_API_URL);
   return {
     plugins: [react()],
 
@@ -12,7 +13,7 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: env.REACT_APP_API_URL,
+          target: env.VITE_API_URL,
           changeOrigin: true,
         }
       }
@@ -22,7 +23,7 @@ export default defineConfig(({ mode }) => {
     preview: {
       proxy: {
         '/api': {
-          target: env.REACT_APP_API_URL,
+          target: env.VITE_API_URL,
           changeOrigin: true,
         }
       }
