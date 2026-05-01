@@ -6,14 +6,15 @@ import br.univates.model.Users;
 import br.univates.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final BCryptPasswordEncoder encoder;
+    private final PasswordEncoder encoder;
     private final UserRepository userRepository;
 
-    public UserService(BCryptPasswordEncoder encoder, UserRepository userRepository) {
+    public UserService(PasswordEncoder encoder, UserRepository userRepository) {
         this.encoder = encoder;
         this.userRepository = userRepository;
     }
