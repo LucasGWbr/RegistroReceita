@@ -37,7 +37,7 @@ export default function Login({ onLogin }) {
                 <h1 className={styles.title}>Entrar</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <label>Email
-                        <input name="email" type="email" value={form.login} onChange={handleChange} required />
+                        <input name="login" type="email" value={form.login} onChange={handleChange} required />
                     </label>
                     <label>Senha
                         <input name="password" type="password" value={form.password} onChange={handleChange} required />

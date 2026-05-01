@@ -40,7 +40,7 @@ export default function Register() {
                 ) : (
                     <form onSubmit={handleSubmit} className={styles.form}>
                         <label>Nome <input name="name" type="text" value={form.name} onChange={handleChange} required /></label>
-                        <label>Email<input name="email" type="email" value={form.login} onChange={handleChange} required /></label>
+                        <label>Email<input name="login" type="email" value={form.login} onChange={handleChange} required /></label>
                         <label>Senha<input name="password" type="password" value={form.password} onChange={handleChange} required /></label>
                         {error && <p className={styles.error}>{error}</p>}
                         <button type="submit" disabled={loading} className={styles.btn}>
