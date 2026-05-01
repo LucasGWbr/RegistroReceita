@@ -25,6 +25,7 @@ public class UserService {
             Users users = new Users();
             BeanUtils.copyProperties(userDTO, users);
             users.setPassword(password);
+            users.setEmail(userDTO.login());
             return userRepository.save(users);
         } catch (Exception e) {
             return null;
