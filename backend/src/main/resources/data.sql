@@ -1,4 +1,4 @@
-TRUNCATE TABLE receitas RESTART IDENTITY CASCADE;
+TRUNCATE TABLE recipes RESTART IDENTITY CASCADE;
 
 INSERT INTO recipes (name, description, price, recipe_type) VALUES
                                                                 ('Bolo de Chocolate',      'Bolo fofinho com cobertura de ganache',           25.00, 'Sobremesa'),
