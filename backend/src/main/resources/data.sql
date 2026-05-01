@@ -1,6 +1,6 @@
-TRUNCATE TABLE recipes RESTART IDENTITY CASCADE;
+TRUNCATE TABLE recipe RESTART IDENTITY CASCADE;
 
-INSERT INTO recipes (name, description, price, recipe_type) VALUES
+INSERT INTO recipe (name, description, price, recipe_type) VALUES
                                                                 ('Bolo de Chocolate',      'Bolo fofinho com cobertura de ganache',           25.00, 'Sobremesa'),
                                                                 ('Frango Grelhado',        'Peito de frango temperado na chapa com ervas',    18.50, 'Prato Principal'),
                                                                 ('Sopa de Legumes',        'Sopa cremosa com cenoura, batata e chuchu',       12.00, 'Sopa'),
