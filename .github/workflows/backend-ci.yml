@@ -51,6 +51,7 @@ jobs:
           context: ./frontend
           push: true
           tags: ghcr.io/lucasgwbr/registroreceita/frontend:latest
+
       - name: Deploy automático em homolog (SSH Nativo com Debug)
         env:
           SSH_KEY: ${{ secrets.VM_SSH_KEY }}
@@ -61,9 +62,9 @@ jobs:
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           
-          # Adicionamos -v (verbose) e desativamos a checagem estrita para forçar a conexão
+          # Removido o ssh-keyscan para parar de acionar o firewall de força bruta do servidor
+          
           ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 "$USER@$HOST" << 'EOF'
-            # Ativa a exibição dos comandos que estão rodando na VM
             set -x 
           
             cd ~/app
