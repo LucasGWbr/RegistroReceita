@@ -1,0 +1,21 @@
+services:
+  db:
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+
+  backend:
+    image: ghcr.io/SEU_USUARIO/SEU_REPO/backend:prod
+    container_name: spring_api_prod
+    ports:
+      - "80:8080"
+
+  frontend:
+    image: ghcr.io/SEU_USUARIO/SEU_REPO/frontend:prod
+    container_name: react_app_prod
+    ports:
+      - "4173:4173"              # ou 443 se tiver SSL
+
+volumes:
+  postgres_data_prod:
