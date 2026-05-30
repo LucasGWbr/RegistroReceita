@@ -52,16 +52,27 @@ jobs:
           push: true
           tags: ghcr.io/lucasgwbr/registroreceita/frontend:latest
 
-      - name: Deploy automático em homolog
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          debug: true
-          script: |
+      - name: Deploy automático em homolog (SSH Nativo)
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+          HOST: ${{ secrets.VM_HOST }}
+          USER: ${{ secrets.VM_USER }}
+        run: |
+          # 1. Prepara o diretório SSH no GitHub runner
+          mkdir -p ~/.ssh
+          
+          # 2. Salva a sua chave privada em um arquivo seguro
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          
+          # 3. Adiciona a VM aos hosts confiáveis (Evita aquele prompt de yes/no)
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+          
+          # 4. Conecta via SSH e roda os comandos (Tudo entre o EOF roda lá na sua VM)
+          ssh -i ~/.ssh/id_ed25519 "$USER@$HOST" << 'EOF'
             cd ~/app
             docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog pull
             docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog up -d --remove-orphans
             docker image prune -f
-            echo "✅ Homolog atualizado!"
+            echo "✅ Homolog atualizado com sucesso!"
+          EOF
