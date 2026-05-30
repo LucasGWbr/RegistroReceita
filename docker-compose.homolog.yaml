@@ -6,13 +6,13 @@ services:
       - postgres_data_homolog:/var/lib/postgresql/data
 
   backend:
-    image: ghcr.io/SEU_USUARIO/SEU_REPO/backend:homolog
+    image: ghcr.io/lucasgwbr/registroreceita/backend:homolog
     container_name: spring_api_homolog
     ports:
       - "8080:8080"
 
   frontend:
-    image: ghcr.io/SEU_USUARIO/SEU_REPO/frontend:homolog
+    image: ghcr.io/lucasgwbr/registroreceita/frontend:homolog
     container_name: react_app_homolog
     ports:
       - "4173:4173"
