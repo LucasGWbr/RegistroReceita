@@ -56,7 +56,7 @@ jobs:
       - name: Deploy automático em homolog
         run: |
           cd ~/app
-          docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog pull
-          docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog up -d --remove-orphans
+          docker compose -f docker-compose.yaml -f docker-compose.homolog.yaml --env-file .env.homolog pull
+          docker compose -f docker-compose.yaml -f docker-compose.homolog.yaml --env-file .env.homolog up -d --remove-orphans
           docker image prune -f
           echo "✅ Homolog atualizado!"
