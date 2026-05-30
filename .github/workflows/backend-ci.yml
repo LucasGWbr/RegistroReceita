@@ -3,12 +3,13 @@ name: Java CI
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'backend/**'
 
 jobs:
-  build_and_test:
+  build_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Pegar o código do repositório
@@ -29,3 +30,37 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Login no ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build e Push — backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/${{ github.repository }}/backend:latest
+
+      - name: Build e Push — frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/${{ github.repository }}/frontend:latest
+
+      - name: Deploy automático em homolog
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            cd ~/app
+            docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog pull
+            docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog up -d --remove-orphans
+            docker image prune -f
+            echo "✅ Homolog atualizado!"
