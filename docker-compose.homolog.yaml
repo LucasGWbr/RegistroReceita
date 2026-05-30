@@ -1,0 +1,21 @@
+services:
+  db:
+    ports:
+      - "5433:5432"              # porta diferente pra não conflitar com prod
+    volumes:
+      - postgres_data_homolog:/var/lib/postgresql/data
+
+  backend:
+    image: ghcr.io/SEU_USUARIO/SEU_REPO/backend:homolog
+    container_name: spring_api_homolog
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: ghcr.io/SEU_USUARIO/SEU_REPO/frontend:homolog
+    container_name: react_app_homolog
+    ports:
+      - "4173:4173"
+
+volumes:
+  postgres_data_homolog:
