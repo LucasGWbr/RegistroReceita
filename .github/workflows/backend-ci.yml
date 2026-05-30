@@ -6,7 +6,8 @@ on:
 
 jobs:
   build_and_deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # ← roda direto na VM
+
     permissions:
       contents: read
       packages: write
@@ -52,24 +53,10 @@ jobs:
           push: true
           tags: ghcr.io/lucasgwbr/registroreceita/frontend:latest
 
-      - name: Deploy automático em homolog (SSH Nativo com Debug)
-        env:
-          SSH_KEY: ${{ secrets.VM_SSH_KEY }}
-          HOST: ${{ secrets.VM_HOST }}
-          USER: ${{ secrets.VM_USER }}
+      - name: Deploy automático em homolog
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          
-          # Removido o ssh-keyscan para parar de acionar o firewall de força bruta do servidor
-          
-          ssh -v -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 "$USER@$HOST" << 'EOF'
-            set -x 
-          
-            cd ~/app
-            docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog pull
-            docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog up -d --remove-orphans
-            docker image prune -f
-            echo "✅ Homolog atualizado com sucesso!"
-          EOF
+          cd ~/app
+          docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog pull
+          docker compose -f docker-compose.yml -f docker-compose.homolog.yml --env-file .env.homolog up -d --remove-orphans
+          docker image prune -f
+          echo "✅ Homolog atualizado!"
