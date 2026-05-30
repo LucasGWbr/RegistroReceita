@@ -1,0 +1,19 @@
+CREATE TABLE users (
+                       id         BIGINT       NOT NULL AUTO_INCREMENT,
+                       name       VARCHAR(255),
+                       password   VARCHAR(255),
+                       email      VARCHAR(255) UNIQUE,
+                       situation  VARCHAR(255),
+                       created_at TIMESTAMP,
+                       PRIMARY KEY (id)
+);
+
+CREATE TABLE recipe (
+                        id          BIGINT         NOT NULL AUTO_INCREMENT,
+                        name        VARCHAR(255),
+                        description VARCHAR(255),
+                        price       DECIMAL(10, 2),
+                        recipe_type VARCHAR(255),
+                        created_at  TIMESTAMP,
+                        PRIMARY KEY (id)
+);

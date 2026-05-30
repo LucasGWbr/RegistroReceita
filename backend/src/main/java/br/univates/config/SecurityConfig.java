@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF desabilitado para APIs stateless
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/*").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
                         .anyRequest().authenticated()
                 )
 

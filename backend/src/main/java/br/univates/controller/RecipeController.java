@@ -46,7 +46,9 @@ public class RecipeController {
             LocalDateTime dateTime
     )
     {
-        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, LocalDate.from(dateTime)));
+        LocalDate date = (dateTime != null) ? dateTime.toLocalDate() : null;
+
+        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, date));
     }
 
     @PutMapping("/update/{id}")
