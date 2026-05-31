@@ -1,7 +1,7 @@
 services:
   db:
     ports:
-      - "5433:5432"              # porta diferente pra não conflitar com prod
+      - "5433:5433"              # porta diferente pra não conflitar com prod
     volumes:
       - postgres_data_homolog:/var/lib/postgresql/data
 
