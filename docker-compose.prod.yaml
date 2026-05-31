@@ -6,13 +6,13 @@ services:
       - postgres_data_prod:/var/lib/postgresql/data
 
   backend:
-    image: ghcr.io/lucasgwbr/registroreceita/backend:prod
+    image: ghcr.io/lucasgwbr/registroreceita/backend:latest
     container_name: spring_api_prod
     ports:
       - "80:8080"
 
   frontend:
-    image: ghcr.io/lucasgwbr/registroreceita/frontend:prod
+    image: ghcr.io/lucasgwbr/registroreceita/frontend:latest
     container_name: react_app_prod
     ports:
       - "4173:4173"              # ou 443 se tiver SSL
