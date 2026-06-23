@@ -69,6 +69,7 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         }
     }
+    //teste de commit novo
 
     @GetMapping("/read/pdf")
     public ResponseEntity<InputStreamResource> exportPdf(
