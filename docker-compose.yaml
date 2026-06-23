@@ -3,14 +3,13 @@ services:
   # ── PostgreSQL ──────────────────────────────────────────────────────────────
   db:
     image: postgres:16-alpine
-    container_name: postgres_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -26,7 +25,6 @@ services:
     build:
       context: ./backend          # pasta com o Dockerfile do Spring Boot
       dockerfile: Dockerfile
-    container_name: spring_api
     restart: unless-stopped
     depends_on:
       db:
@@ -42,7 +40,7 @@ services:
       SPRING_MAIL_USERNAME: ${SPRING_MAIL_USERNAME}
       SPRING_MAIL_PASSWORD: ${SPRING_MAIL_PASSWORD}
     ports:
-      - "8080:8080"
+      - "${BACKEND_PORT:-8080}:8080"
     networks:
       - app-network
 
@@ -51,14 +49,13 @@ services:
     build:
       context: ./frontend         # pasta com o Dockerfile do React
       dockerfile: Dockerfile
-    container_name: react_app
     restart: unless-stopped
     depends_on:
       - backend
     environment:
       VITE_API_URL: ${VITE_API_URL}
     ports:
-      - "4173:4173"
+      - "${FRONTEND_PORT:-4173}:4173"
     networks:
       - app-network
 
