@@ -20,9 +20,10 @@ public class Users implements UserDetails {
     private String name;
     @JsonIgnore
     @ToString.Exclude
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String situation;

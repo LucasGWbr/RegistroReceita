@@ -46,7 +46,9 @@ public class RecipeController {
             LocalDateTime dateTime
     )
     {
-        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, LocalDate.from(dateTime)));
+        LocalDate date = (dateTime != null) ? dateTime.toLocalDate() : null;
+
+        return ResponseEntity.ok(recipeService.getFilteredRecipes(type, date));
     }
 
     @PutMapping("/update/{id}")
@@ -67,6 +69,7 @@ public class RecipeController {
             return ResponseEntity.notFound().build();
         }
     }
+    //teste de commit novo
 
     @GetMapping("/read/pdf")
     public ResponseEntity<InputStreamResource> exportPdf(

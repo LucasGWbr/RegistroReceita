@@ -3,12 +3,14 @@ name: Java CI
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'backend/**'
 
 jobs:
-  build_and_test:
-    runs-on: ubuntu-latest
+  build_and_deploy:
+    runs-on: self-hosted  # ← roda direto na VM
+
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Pegar o código do repositório
@@ -29,3 +31,32 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: Login no ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build e Push — backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ghcr.io/lucasgwbr/registroreceita/backend:latest
+
+      - name: Build e Push — frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/lucasgwbr/registroreceita/frontend:latest
+
+      - name: Deploy automático em homolog
+        run: |
+          cd ~/app
+          docker compose -f docker-compose.yaml -f docker-compose.homolog.yaml --env-file .env.homolog pull
+          docker compose -f docker-compose.yaml -f docker-compose.homolog.yaml --env-file .env.homolog up -d --remove-orphans
+          docker image prune -f
+          echo "✅ Homolog atualizado!"
