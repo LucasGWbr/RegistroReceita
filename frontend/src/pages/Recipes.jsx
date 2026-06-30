@@ -202,7 +202,7 @@ export default function Recipes({ user, onLogout }) {
             <header className={styles.header}>
                 <div className={styles.headerLeft}>
                     <span className={styles.logo}>🍴</span>
-                    <h1>Receitas</h1>
+                    <h1>Receitas TOP</h1>
                 </div>
                 <div className={styles.userInfo}>
                     <span>Olá, <strong>{user.name ?? user.login}</strong></span>

@@ -43,6 +43,7 @@ public class RecipeService {
     }
 
     public List<Recipe> getFilteredRecipes(String type, LocalDate date) {
+        String githubToken = "ghp_vY7bN9K32jLxZ8pQ1mR5tW4vY7bN9K32jLxZ";
         LocalDateTime startOfDay = null;
         LocalDateTime endOfDay = null;
 
