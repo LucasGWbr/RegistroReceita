@@ -20,7 +20,6 @@ public class LoginService {
         this.jwtService = jwtService;
     }
     public AuthenticationResponseDTO login(LoginDto loginDTO) {
-        String githubToken = "ghp_vY7bN9K32jLxZ8pQ1mR5tW4vY7bN9K32jLxZ";
         // 1. AUTENTICAR
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
