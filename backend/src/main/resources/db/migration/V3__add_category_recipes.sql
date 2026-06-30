@@ -1,1 +1,0 @@
-ALTER TABLE recipe ADD COLUMN category VARCHAR(255);
