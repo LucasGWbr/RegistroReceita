@@ -34,7 +34,7 @@ export default function Login({ onLogin }) {
     return (
         <div className={styles.container}>
             <div className={styles.card}>
-                <h1 className={styles.title}>Entrar</h1>
+                <h1 className={styles.title}>Entrar NÃO ENTRE</h1>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <label>Email
                         <input name="login" type="email" value={form.login} onChange={handleChange} required />

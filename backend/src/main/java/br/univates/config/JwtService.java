@@ -17,6 +17,8 @@ public class JwtService {
 
     @Value("${jwt.secret}")
     private String secretKey;
+    public String apiKey = "teste_chave_api_sonar_qube";
+
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
